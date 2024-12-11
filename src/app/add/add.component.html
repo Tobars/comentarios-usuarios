@@ -1,0 +1,56 @@
+<div class="container mt-5">
+  <h2>Agregar Nuevo Post</h2>
+
+  <!-- Formulario con validaciones -->
+  <form (ngSubmit)="onSubmit()" #postForm="ngForm">
+
+    <!-- Campo Título -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Título</label>
+      <input
+        type="text"
+        id="title"
+        class="form-control"
+        [(ngModel)]="post.title"
+        name="title"
+        required
+        minlength="3"
+        #title="ngModel"
+        placeholder="Ingresa el título del post"
+      />
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+        El título es obligatorio y debe tener al menos 3 caracteres.
+      </div>
+    </div>
+
+    <!-- Campo Cuerpo -->
+    <div class="mb-3">
+      <label for="body" class="form-label">Cuerpo</label>
+      <textarea
+        id="body"
+        class="form-control"
+        [(ngModel)]="post.body"
+        name="body"
+        required
+        minlength="3"
+        #body="ngModel"
+        placeholder="Ingresa el cuerpo del post"
+      ></textarea>
+      <div *ngIf="body.invalid && (body.dirty || body.touched)" class="text-danger">
+        El cuerpo es obligatorio y debe tener al menos 3 caracteres.
+      </div>
+    </div>
+
+    <!-- Botón Enviar -->
+    <button type="submit" class="btn btn-primary mx-3" [disabled]="postForm.invalid">Enviar</button>
+
+    <!-- Botón Cancelar -->
+    <button
+      type="button"
+      class="btn btn-danger mx-3"
+      [routerLink]="'/all-posts'"
+    >
+      Cancelar
+    </button>
+  </form>
+</div>
