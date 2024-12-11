@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';  // Para hacer peticiones HTTP
-import { CommonModule } from '@angular/common'; // Para usar directivas comunes como ngFor
-import { RouterModule } from '@angular/router'; // Para routerLink
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-all-posts',
@@ -13,8 +13,9 @@ import { RouterModule } from '@angular/router'; // Para routerLink
 })
 export class AllPostComponent implements OnInit {
   posts: any[] = [];
-  userEmail: string = '';   // Variable para almacenar el correo
-  emailDisplay: string = ''; // Variable para mostrar el correo en la interfaz
+  userEmail: string = '';
+  emailDisplay: string = '';
+  selectedPostId: number | null = null;
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -23,15 +24,12 @@ export class AllPostComponent implements OnInit {
 
     if (userData) {
       const parsedUser = JSON.parse(userData);
-
       this.userEmail = parsedUser?.email || 'No Email';
-
-      this.emailDisplay = this.userEmail;
-
     } else {
       this.userEmail = 'No Email';
-      this.emailDisplay = this.userEmail;
     }
+
+    this.emailDisplay = this.userEmail;
 
     this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts')
       .subscribe(data => {
@@ -40,15 +38,23 @@ export class AllPostComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('user'); // Eliminamos el 'user' de localStorage
-    this.router.navigate(['/login']); // Redirigimos al login
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 
-  deletePost(postId: number): void {
-    this.posts = this.posts.filter(post => post.id !== postId);
+  selectPostForDeletion(postId: number): void {
+    this.selectedPostId = postId;
   }
 
-  addPost(): void {
-    this.router.navigate(['/all-posts']);
+  deletePost(): void {
+
+      setTimeout(() => {
+        this.posts = this.posts.filter(post => post.id !== this.selectedPostId);
+        console.log(`Post con ID ${this.selectedPostId} eliminado.`);
+        this.selectedPostId = null;
+      }, 200);
+
   }
+
+
 }

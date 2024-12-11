@@ -1,71 +1,111 @@
 <div class="text-center mb-4">
-  <h1 class="display-4 d-inline-block">
-    <i class="me-3"></i> Comentarios de Usuarios
+  <h1 class="display-4">
+    <i class="bi bi-chat-dots me-3"></i> Comentarios de Usuarios
   </h1>
 </div>
 
+<!-- Barra de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Posts App</a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarNav"
-    aria-controls="navbarNav"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
-        <span class="navbar-text text-white me-3">
-          {{emailDisplay}}
-        </span>
-      </li>
-      <li class="nav-item">
-        <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
-      </li>
-    </ul>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="bi bi-journal-text"></i> Posts App
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <span class="navbar-text text-white me-3">
+            <i class="bi bi-person-circle me-2"></i> {{ emailDisplay }}
+          </span>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
-<!-- Tabla de Posts -->
-<div class="container mt-4">
-  <h2>Listado de Posts</h2>
-  <!-- Botón para agregar un nuevo post -->
-  <div class="text-end mb-3">
-    <button class="btn btn-primary" [routerLink]="['/add']">Agregar Post</button>
+<!-- Contenedor principal -->
+<div class="container mt-5">
+  <!-- Encabezado y botón de agregar -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary">
+      <i class="bi bi-list-task me-2"></i> Listado de Posts
+    </h2>
+    <button class="btn btn-success" [routerLink]="['/add']">
+      <i class="bi bi-plus-circle me-2"></i> Agregar Post
+    </button>
   </div>
 
-  <!-- Tabla de posts -->
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Título</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let post of posts">
-        <a [routerLink]="['/post-edit' , post.id]">
+  <!-- Tabla de Posts -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Título</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
           <td>{{ post.id }}</td>
-        </a>
-        <td>{{ post.title }}</td>
-        <td>{{ post.body }}</td>
-        <td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.body }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteModal"
+              (click)="selectPostForDeletion(post.id)"
+            >
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-          <button
-            class="btn btn-danger ms-2"
-
-          >
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<!-- Modal para Confirmar Eliminación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteModalLabel">
+          <i class="bi bi-exclamation-circle"></i> Confirmar eliminación
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">
+          ¿Estás seguro de que deseas eliminar este post con ID: <strong>{{ selectedPostId }}</strong>?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="deletePost()">
+          <i class="bi bi-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
