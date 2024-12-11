@@ -1,35 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../../posts.service';
 import { CommonModule } from '@angular/common';
-import { AllPostComponent } from '../all-posts.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Comment } from '../../data.model' ;
 
 @Component({
   selector: 'app-post-details',
   standalone: true,
-  imports: [CommonModule, AllPostComponent, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './post-details.component.html',
-  styleUrl: './post-details.component.css',
+  styleUrls: ['./post-details.component.css'],
 })
-export class PostDetailsComponent {
-  comment: any;
-errorMessage: any;
+export class PostDetailsComponent implements OnInit {
+  comment: Comment | null = null;
+  errorMessage: string | null = null;
+  isLoading: boolean = true;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly postService: PostsService
   ) {}
 
-  ngOnInit() {
-    // Obtener el ID del comentario desde la URL
+  ngOnInit(): void {
     const commentId = this.route.snapshot.paramMap.get('id');
     if (commentId) {
-      // Llamar al servicio para obtener el comentario por su ID
-      this.postService
-        .getCommentById(parseInt(commentId))
-        .subscribe((comment) => {
-          this.comment = comment;
-        });
+      this.fetchPostDetails(commentId);  
+    } else {
+      this.errorMessage = 'El ID del comentario no es válido';
+      this.isLoading = false;
+
+
     }
+  }
+
+  fetchPostDetails(commentId: string): void {
+    this.postService.getCommentById(parseInt(commentId, 10)).subscribe({
+      next: (comment) => {
+        this.comment = comment;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Hubo un error al cargar los detalles del comentario. Intenta más tarde.';
+        this.isLoading = false;
+      },
+    });
   }
 }

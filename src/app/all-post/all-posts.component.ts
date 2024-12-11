@@ -1,35 +1,79 @@
 import { Component, OnInit } from '@angular/core';
-import { PostDetailsComponent } from './post-details/post-details.component';
-import { PostsService } from '../posts.service';
-import { CommonModule, NgFor } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';  // Para hacer peticiones HTTP
+import { CommonModule } from '@angular/common'; // Para usar directivas comunes como ngFor
+import { RouterModule } from '@angular/router'; // Para routerLink
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // Usamos el modal de Bootstrap
 
 @Component({
   selector: 'app-all-posts',
   standalone: true,
-  imports: [PostDetailsComponent, CommonModule, NgFor, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './all-posts.component.html',
-  styleUrl: './all-posts.component.css',
+  styleUrls: ['./all-posts.component.css']
 })
 export class AllPostComponent implements OnInit {
-  comments: any[] = [];
+  posts: any[] = [];
+  userEmail: string = '';   // Variable para almacenar el correo
+  emailDisplay: string = ''; // Variable para mostrar el correo en la interfaz
+  postIdToDelete: number | null = null; // Guardamos el ID del post a eliminar
 
-  constructor(
-    private readonly postService: PostsService,
-    private readonly router: Router
-  ) {}
+  constructor(private router: Router, private http: HttpClient, private modalService: NgbModal) { }
 
-  ngOnInit() {
-    // Fetch all comments initially
-    this.postService.getComments().subscribe((comments) => {
-      this.comments = comments;
-    });
+  ngOnInit(): void {
+    const userData = localStorage.getItem('user');
+
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+
+      this.userEmail = parsedUser?.email || 'No Email';
+
+      this.emailDisplay = this.userEmail;
+
+    } else {
+      this.userEmail = 'No Email';
+      this.emailDisplay = this.userEmail;
+    }
+
+    // Cargar posts
+    this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts')
+      .subscribe(data => {
+        this.posts = data;
+      });
   }
 
-  goToDetails(commentId: number): void {
-    // Asegúrate de que el ID sea correcto y redirige a la página de detalles
-    console.log('Redirigiendo a post-details con ID:', commentId); // Para depurar
-    this.router.navigate(['post-details', commentId]);
+  logout(): void {
+    localStorage.removeItem('user'); // Eliminamos el 'user' de localStorage
+    this.router.navigate(['/login']); // Redirigimos al login
   }
 
+  confirmDelete(postId: number): void {
+    this.postIdToDelete = postId; // Guardamos el ID del post a eliminar
+    const modal = new window.bootstrap.Modal(document.getElementById('confirmDeleteModal') as HTMLElement);
+    modal.show(); // Mostramos el modal
+  }
+
+  deletePost(postId: number): void {
+    if (postId) {
+      // Realizamos la solicitud DELETE a la API
+      this.http.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+        .subscribe({
+          next: () => {
+            // Si la eliminación fue exitosa, actualizamos la tabla
+            this.posts = this.posts.filter(post => post.id !== postId);
+            // Cerramos el modal
+            const modal = new window.bootstrap.Modal(document.getElementById('confirmDeleteModal') as HTMLElement);
+            modal.hide();
+          },
+          error: (err) => {
+            alert('Error al eliminar el post.');
+            console.error(err);
+          }
+        });
+    }
+  }
+
+  addPost(): void {
+    this.router.navigate(['/all-posts']);
+  }
 }
