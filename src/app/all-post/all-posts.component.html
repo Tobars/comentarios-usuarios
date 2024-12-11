@@ -4,7 +4,6 @@
   </h1>
 </div>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Posts App</a>
   <button
@@ -22,7 +21,7 @@
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
         <span class="navbar-text text-white me-3">
-          {{ emailDisplay }}
+          {{emailDisplay}}
         </span>
       </li>
       <li class="nav-item">
@@ -35,7 +34,6 @@
 <!-- Tabla de Posts -->
 <div class="container mt-4">
   <h2>Listado de Posts</h2>
-
   <!-- Botón para agregar un nuevo post -->
   <div class="text-end mb-3">
     <button class="btn btn-primary" [routerLink]="['/add']">Agregar Post</button>
@@ -53,19 +51,16 @@
     </thead>
     <tbody>
       <tr *ngFor="let post of posts">
-        <td>{{ post.id }}</td>
+        <a [routerLink]="['/post-edit' , post.id]">
+          <td>{{ post.id }}</td>
+        </a>
         <td>{{ post.title }}</td>
         <td>{{ post.body }}</td>
         <td>
-          <button
-            class="btn btn-warning"
-            [routerLink]="['/post-details', post.id]"
-          >
-            Ver Detalles
-          </button>
+
           <button
             class="btn btn-danger ms-2"
-            (click)="confirmDelete(post.id)"
+
           >
             Eliminar
           </button>
@@ -74,18 +69,3 @@
     </tbody>
   </table>
 </div>
-
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar el post con ID: {{ postIdToDelete }}?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <
