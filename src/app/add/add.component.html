@@ -1,3 +1,54 @@
+<!-- Barra de navegación tipo Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <!-- Botón para móviles -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link "  href="../all-posts">Post App</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link active" aria-current="page" href="add">Agregar</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Editar Post</a>
+      </li>
+    </ul>
+
+    <!-- Contenido de la barra de navegación -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto d-flex">
+
+        <li class="nav-item d-flex align-items-center">
+          <span class="navbar-text text-white ms-3 me-2"> <!-- Ajusta el margen aquí -->
+            <i class="bi bi-person-circle me-2"></i> {{ emailDisplay }}
+          </span>
+
+        </li>
+
+        <!-- Cerrar sesión alineado a la derecha -->
+        <li class="nav-item">
+          <button class="btn btn-danger" data-bs-toggle="modal"
+          data-bs-target="#logout">
+             Cerrar sesión
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <div class="container mt-5">
   <h2>Agregar Nuevo Post</h2>
 
@@ -6,7 +57,7 @@
 
     <!-- Campo Título -->
     <div class="mb-3">
-      <label for="title" class="form-label">Título</label>
+      <label for="title" class="form-label">Titulo</label>
       <input
         type="text"
         id="title"
@@ -16,10 +67,10 @@
         required
         minlength="3"
         #title="ngModel"
-        placeholder="Ingresa el título del post"
+        placeholder="Ingresa el titulo del post"
       />
       <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
-        El título es obligatorio y debe tener al menos 3 caracteres.
+        El titulo es obligatorio y debe tener al menos 3 caracteres.
       </div>
     </div>
 

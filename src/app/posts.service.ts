@@ -16,7 +16,7 @@ interface Comment {
 })
 export class PostsService {
   constructor(private http: HttpClient) {}
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  public apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   // Obtener un comentario por su ID
   getCommentById(id: number): Observable<Comment> {
@@ -31,5 +31,11 @@ export class PostsService {
   }
   addPost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.apiUrl, post);
+  }
+
+  deletePost(selectedPostId:number): Observable<any> {
+
+
+    return this.http.delete(`${this.apiUrl}/${selectedPostId}`);
   }
 }

@@ -19,6 +19,9 @@ export class AddComponent {
     userId: 1
   };
 
+  userEmail: string = '';
+  emailDisplay: string = '';
+
   constructor(private router: Router, private postService: PostsService) {}
 
   onSubmit(): void {
@@ -30,4 +33,57 @@ export class AddComponent {
       });
     }
   }
+
+
+  ngOnInit(): void {
+    const userData = localStorage.getItem('user');
+
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      this.userEmail = parsedUser?.email || 'No Email';
+    } else {
+      this.userEmail = 'No Email';
+    }
+
+    this.emailDisplay = this.userEmail;
+
+
+  }
+
+  logout(): void {
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
 }
+
+
+/*
+
+
+  }
+
+    ngOnInit(): void {
+      const userData = localStorage.getItem('user');
+
+      if (userData) {
+        const parsedUser = JSON.parse(userData);
+        this.userEmail = parsedUser?.email || 'No Email';
+      } else {
+        this.userEmail = 'No Email';
+      }
+
+      this.emailDisplay = this.userEmail;
+
+
+    }
+
+    logout(): void {
+      localStorage.removeItem('user');
+      this.router.navigate(['/login']);
+    }
+
+
+  }
+
+
+*/

@@ -16,6 +16,8 @@ export class PostEditComponent implements OnInit {
   postId: number = 0;
   errorMessage: string | null = null;
   postData: any | null = null;
+  userEmail: string = '';
+  emailDisplay: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +38,26 @@ export class PostEditComponent implements OnInit {
 
     // Cargar los datos del post
     this.fetchPostDetails();
+
+
+
+    const userData = localStorage.getItem('user');
+
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      this.userEmail = parsedUser?.email || 'No Email';
+    } else {
+      this.userEmail = 'No Email';
+    }
+
+    this.emailDisplay = this.userEmail;
+
+
+  }
+
+  logout(): void {
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 
   fetchPostDetails(): void {

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { PostsService } from '../posts.service'
+
 
 @Component({
   selector: 'app-all-posts',
@@ -16,6 +18,7 @@ export class AllPostComponent implements OnInit {
   userEmail: string = '';
   emailDisplay: string = '';
   selectedPostId: number | null = null;
+  apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -47,14 +50,19 @@ export class AllPostComponent implements OnInit {
   }
 
   deletePost(): void {
+    const postIdToDelete = this.selectedPostId !== null ? this.selectedPostId : 1;
 
-      setTimeout(() => {
-        this.posts = this.posts.filter(post => post.id !== this.selectedPostId);
-        console.log(`Post con ID ${this.selectedPostId} eliminado.`);
-        this.selectedPostId = null;
-      }, 200);
-
+    this.http.delete(`${this.apiUrl}/${postIdToDelete}`).subscribe(
+      (response) => {
+        console.log('Post eliminado con éxito', response);
+        // Elimina el post de la lista local
+        this.posts = this.posts.filter(post => post.id !== postIdToDelete);
+        this.selectedPostId = null; // Resetea el ID seleccionado
+      },
+      (error) => {
+        console.error('Error al eliminar el post', error);
+        alert('Hubo un error al eliminar el post');
+      }
+    );
   }
-
-
 }
