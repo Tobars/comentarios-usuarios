@@ -7,7 +7,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const usuarioAuth = localStorage.getItem('user'); // Verificar si existe el usuario en localStorage
 
   if (usuarioAuth) {
-    return true; // Usuario autenticado, permite el acceso
+    return true;
   } else {
     router.navigate(['/login']);
     return false;
