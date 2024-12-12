@@ -16,32 +16,38 @@
 
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="../all-posts">Post App</a>
+        <a class="nav-link active" aria-current="page" href="../all-posts"
+          >Post App</a
+        >
       </li>
-      <li class="nav-item" >
+      <li class="nav-item">
         <a class="nav-link" href="add">Agregar</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Editar Post</a>
-       </li>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+          >Editar Post</a
+        >
+      </li>
     </ul>
 
     <!-- Contenido de la barra de navegación -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto d-flex">
-
         <li class="nav-item d-flex align-items-center">
-          <span class="navbar-text text-white ms-3 me-2"> <!-- Ajusta el margen aquí -->
+          <span class="navbar-text text-white ms-3 me-2">
+            <!-- Ajusta el margen aquí -->
             <i class="bi bi-person-circle me-2"></i> {{ emailDisplay }}
           </span>
-
         </li>
 
         <!-- Cerrar sesión alineado a la derecha -->
         <li class="nav-item">
-          <button class="btn btn-danger" data-bs-toggle="modal"
-          data-bs-target="#logout">
-             Cerrar sesión
+          <button
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#logout"
+          >
+            Cerrar sesión
           </button>
         </li>
       </ul>
@@ -49,24 +55,20 @@
   </div>
 </nav>
 
-
-
 <div class="text-center mb-4">
   <h1 class="display-4">
     <i class="bi bi-chat-dots me-3"></i> Comentarios de Usuarios
   </h1>
 </div>
 
-
-
-
 <!-- Contenedor principal -->
 <div class="container mt-5">
   <!-- Encabezado y botón de agregar -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="text-primary">
-
-    </h2>
+    <h2 class="text-primary"></h2>
+    <button class="btn btn-success" [routerLink]="['/add']">
+      <i class="bi bi-plus-circle me-2"></i> Agregar Post
+    </button>
     <button class="btn btn-success" [routerLink]="['/add']">
       <i class="bi bi-plus-circle me-2"></i> Agregar Post
     </button>
@@ -85,7 +87,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let post of posts">
-          <td > <a class="text-decoration-none" [routerLink]="['/post-edit', post.id]" >   {{ post.id }} </a> </td>
+          <td>
+            <a
+              class="text-decoration-none"
+              [routerLink]="['/post-edit', post.id]"
+            >
+              {{ post.id }}
+            </a>
+          </td>
           <td>{{ post.title }}</td>
           <td>{{ post.body }}</td>
           <td>
@@ -106,25 +115,43 @@
 </div>
 
 <!-- Modal para Confirmar Eliminación -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-danger text-white">
         <h5 class="modal-title" id="deleteModalLabel">
           <i class="bi bi-exclamation-circle"></i> Confirmar eliminación
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <p class="text-center">
-          ¿Estás seguro de que deseas eliminar este post con ID: <strong>{{ selectedPostId }}</strong>?
+          ¿Estás seguro de que deseas eliminar este post con ID:
+          <strong>{{ selectedPostId }}</strong
+          >?
         </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="deletePost()">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="deletePost()"
+        >
           <i class="bi bi-trash"></i> Eliminar
         </button>
       </div>
@@ -132,25 +159,37 @@
   </div>
 </div>
 
-<div class="modal fade" id="logout" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="logout"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="deleteModalLabel">
           <i class="bi bi-exclamation-circle"></i> Cerrar Session
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-      <div class="modal-body">
-
-          ¿Estas seguro de que deseas cerrar sesion?
-
-      </div>
+      <div class="modal-body">¿Estas seguro de que deseas cerrar sesion?</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="logout()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="logout()"
+        >
           <i class="bi bi-trash"></i> Confirmar
         </button>
       </div>

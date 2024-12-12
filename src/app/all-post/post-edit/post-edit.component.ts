@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PostsService } from '../../posts.service';
 
 @Component({
   selector: 'app-post-edit',
@@ -23,7 +24,8 @@ export class PostEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private postsService : PostsService
   ) {
     // Inicializamos el formulario con validaciones
     this.postForm = this.fb.group({
@@ -45,9 +47,9 @@ export class PostEditComponent implements OnInit {
 
     if (userData) {
       const parsedUser = JSON.parse(userData);
-      this.userEmail = parsedUser?.email || 'No Email';
+      this.userEmail = parsedUser?.username || 'No Email';
     } else {
-      this.userEmail = 'No Email';
+      this.userEmail = 'No user data';
     }
 
     this.emailDisplay = this.userEmail;
@@ -56,8 +58,7 @@ export class PostEditComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('user');
-    this.router.navigate(['/login']);
+    this.postsService.logout();
   }
 
   fetchPostDetails(): void {
@@ -69,10 +70,8 @@ export class PostEditComponent implements OnInit {
             title: data.title,
             body: data.body
           });
-        },
-        error: (err) => {
-          this.errorMessage = 'No se pudo obtener el post. Intenta más tarde.';
         }
+
       });
   }
 

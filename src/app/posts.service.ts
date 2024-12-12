@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from './data.model';
+import { Router } from '@angular/router';
+import { AllPostComponent } from './all-post/all-posts.component';
 
 interface Comment {
   id: number;
@@ -15,8 +17,14 @@ interface Comment {
   providedIn: 'root',
 })
 export class PostsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router  ) {}
   public apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  posts: any[] = [];
+  userEmail: string = '';
+  emailDisplay: string = '';
+  selectedPostId: number | null = null;
 
   // Obtener un comentario por su ID
   getCommentById(id: number): Observable<Comment> {
@@ -33,9 +41,38 @@ export class PostsService {
     return this.http.post<Post>(this.apiUrl, post);
   }
 
-  deletePost(selectedPostId:number): Observable<any> {
+  deletePost(): void {
+    const postIdToDelete =
+      this.selectedPostId !== null ? this.selectedPostId : 1;
 
+    this.http.delete(`${this.apiUrl}/${postIdToDelete}`).subscribe(
+      (response) => {
+        console.log('Post eliminado con éxito', response);
+        // Elimina el post de la lista local
+        this.posts = this.posts.filter((post) => post.id !== postIdToDelete);
+        this.selectedPostId = null; // Resetea el ID seleccionado
+      },
+      (error) => {
+        console.error('Error al eliminar el post', error);
+        alert('Hubo un error al eliminar el post');
+      }
+    );
+  }
 
-    return this.http.delete(`${this.apiUrl}/${selectedPostId}`);
+  logout(): void {
+    localStorage.removeItem('user');
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
+  }
+
+  getUserShownOnBar() {
+    const userData = localStorage.getItem('user');
+
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      this.userEmail = parsedUser?.username || 'No Email';
+    } else {
+      this.userEmail = 'No user data';
+    }
   }
 }

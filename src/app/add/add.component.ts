@@ -40,9 +40,9 @@ export class AddComponent {
 
     if (userData) {
       const parsedUser = JSON.parse(userData);
-      this.userEmail = parsedUser?.email || 'No Email';
+      this.userEmail = parsedUser?.username || 'No Email';
     } else {
-      this.userEmail = 'No Email';
+      this.userEmail = 'No';
     }
 
     this.emailDisplay = this.userEmail;
