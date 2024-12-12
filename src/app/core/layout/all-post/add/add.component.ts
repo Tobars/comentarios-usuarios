@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PostsService } from '../services/posts.service';
+import { PostsService } from '../../../services/posts.service';
 
 @Component({
   selector: 'app-add',

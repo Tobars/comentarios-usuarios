@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post } from '../data.model';
+import { Post } from '../../data.model';
 import { Router } from '@angular/router';
 import { AllPostComponent } from '../layout/all-post/all-posts.component';
 

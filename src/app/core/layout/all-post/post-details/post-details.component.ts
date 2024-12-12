@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsService } from '../../../services/posts.service';
+import { PostsService } from '../../../../services/posts.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Comment } from '../../../data.model';
+import { Comment } from '../../../../data.model';
 
 @Component({
   selector: 'app-post-details',

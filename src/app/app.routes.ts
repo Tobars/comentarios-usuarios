@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostDetailsComponent } from './layout/all-post/post-details/post-details.component';
-import { AllPostComponent } from './layout/all-post/all-posts.component';
+import { PostDetailsComponent } from './core/layoutbackup/all-post/post-details/post-details.component';
+import { AllPostComponent } from './core/layout/all-post/all-posts.component';
 import { ErrorComponent } from './error/error.component';
-import { LoginComponent } from './auth/pages/login/login.component';
-import { NoAuthComponent } from './auth/pages/no-auth/no-auth.component';
-import { AuthGuard } from './auth/verificar.guard';
-import { AddComponent } from './add/add.component';
-import { PostEditComponent } from './layout/all-post/post-details/post-edit/post-edit.component';
+import { LoginComponent } from './core/auth/pages/login/login.component';
+import { NoAuthComponent } from './core/auth/pages/no-auth/no-auth.component';
+import { AuthGuard } from './core/auth/verificar.guard';
+import { AddComponent } from './core/layout/all-post/add/add.component';
+import { PostEditComponent } from './core/layoutbackup/all-post/post-details/post-edit/post-edit.component';
 
 export const routes: Routes = [
   { path: '', component: AllPostComponent, canActivate: [AuthGuard] },
