@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PostsService } from '../posts.service';
+import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'app-all-posts',

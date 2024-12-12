@@ -2,21 +2,20 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PostsService } from '../posts.service';
-
+import { PostsService } from '../services/posts.service';
 
 @Component({
   selector: 'app-add',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.css'],
 })
 export class AddComponent {
   post = {
     title: '',
     body: '',
-    userId: 1
+    userId: 1,
   };
 
   userEmail: string = '';
@@ -29,11 +28,10 @@ export class AddComponent {
       this.postService.addPost(this.post).subscribe({
         next: () => {
           this.router.navigate(['/']);
-        }
+        },
       });
     }
   }
-
 
   ngOnInit(): void {
     const userData = localStorage.getItem('user');
@@ -46,8 +44,6 @@ export class AddComponent {
     }
 
     this.emailDisplay = this.userEmail;
-
-
   }
 
   logout(): void {
@@ -55,7 +51,6 @@ export class AddComponent {
     this.router.navigate(['/login']);
   }
 }
-
 
 /*
 

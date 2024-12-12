@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post } from './data.model';
+import { Post } from '../data.model';
 import { Router } from '@angular/router';
-import { AllPostComponent } from './all-post/all-posts.component';
+import { AllPostComponent } from '../layout/all-post/all-posts.component';
 
 interface Comment {
   id: number;
@@ -17,9 +17,7 @@ interface Comment {
   providedIn: 'root',
 })
 export class PostsService {
-  constructor(
-    private http: HttpClient,
-    private router: Router  ) {}
+  constructor(private http: HttpClient, private router: Router) {}
   public apiUrl = 'https://jsonplaceholder.typicode.com/posts';
   posts: any[] = [];
   userEmail: string = '';

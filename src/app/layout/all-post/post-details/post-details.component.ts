@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsService } from '../../posts.service';
+import { PostsService } from '../../../services/posts.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Comment } from '../../data.model' ;
+import { Comment } from '../../../data.model';
 
 @Component({
   selector: 'app-post-details',
@@ -24,12 +24,10 @@ export class PostDetailsComponent implements OnInit {
   ngOnInit(): void {
     const commentId = this.route.snapshot.paramMap.get('id');
     if (commentId) {
-      this.fetchPostDetails(commentId);  
+      this.fetchPostDetails(commentId);
     } else {
       this.errorMessage = 'El ID del comentario no es válido';
       this.isLoading = false;
-
-
     }
   }
 
@@ -40,7 +38,8 @@ export class PostDetailsComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        this.errorMessage = 'Hubo un error al cargar los detalles del comentario. Intenta más tarde.';
+        this.errorMessage =
+          'Hubo un error al cargar los detalles del comentario. Intenta más tarde.';
         this.isLoading = false;
       },
     });

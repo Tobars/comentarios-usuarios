@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
-import { AllPostComponent } from './all-post/all-posts.component';
-import { PostDetailsComponent } from './all-post/post-details/post-details.component';
+import { AllPostComponent } from './layout/all-post/all-posts.component';
+import { PostDetailsComponent } from './layout/all-post/post-details/post-details.component';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,39 +16,26 @@ export class AppComponent {
   userEmail: string = '';
   emailDisplay: string = '';
 
+  constructor(private router: Router, private http: HttpClient) {}
 
+  ngOnInit(): void {
+    const userData = localStorage.getItem('user');
 
-
-  constructor (private router: Router, private http: HttpClient){
-
-
-  }
-
-    ngOnInit(): void {
-      const userData = localStorage.getItem('user');
-
-      if (userData) {
-        const parsedUser = JSON.parse(userData);
-        this.userEmail = parsedUser?.email || 'No Email';
-      } else {
-        this.userEmail = 'No Email';
-      }
-
-      this.emailDisplay = this.userEmail;
-
-
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      this.userEmail = parsedUser?.email || 'No Email';
+    } else {
+      this.userEmail = 'No Email';
     }
 
-    logout(): void {
-      localStorage.removeItem('user');
-      this.router.navigate(['/login']);
-    }
-
-
+    this.emailDisplay = this.userEmail;
   }
 
-
-
+  logout(): void {
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
+}
 
 /*
 
