@@ -1,59 +1,4 @@
-<!-- Barra de navegación tipo Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <!-- Botón para móviles -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="../all-posts"
-          >Post App</a
-        >
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="add">Agregar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-          >Editar Post</a
-        >
-      </li>
-    </ul>
-
-    <!-- Contenido de la barra de navegación -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto d-flex">
-        <li class="nav-item d-flex align-items-center">
-          <span class="navbar-text text-white ms-3 me-2">
-            <!-- Ajusta el margen aquí -->
-            <i class="bi bi-person-circle me-2"></i> {{ emailDisplay }}
-          </span>
-        </li>
-
-        <!-- Cerrar sesión alineado a la derecha -->
-        <li class="nav-item">
-          <button
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#logout"
-          >
-            Cerrar sesión
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<app-nav-bar> </app-nav-bar>
 
 <div class="text-center mb-4">
   <h1 class="display-4">
@@ -66,7 +11,7 @@
   <!-- Encabezado y botón de agregar -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="text-primary"></h2>
-    <button class="btn btn-success" [routerLink]="['/add']">
+    <button class="btn btn-success" (click)="testing()">
       <i class="bi bi-plus-circle me-2"></i> Agregar Post
     </button>
     <button class="btn btn-success" [routerLink]="['/add']">
@@ -114,6 +59,10 @@
   </div>
 </div>
 
+<div (keyup)="(0)">
+  <input #entrada />
+  {{ entrada.value }}
+</div>
 <!-- Modal para Confirmar Eliminación -->
 <div
   class="modal fade"

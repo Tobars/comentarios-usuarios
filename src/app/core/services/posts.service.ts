@@ -20,7 +20,7 @@ export class PostsService {
   constructor(private http: HttpClient, private router: Router) {}
   public apiUrl = 'https://jsonplaceholder.typicode.com/posts';
   posts: any[] = [];
-  userEmail: string = '';
+  mainUser: string = '';
   emailDisplay: string = '';
   selectedPostId: number | null = null;
 
@@ -63,14 +63,19 @@ export class PostsService {
     this.router.navigate(['/login']);
   }
 
-  getUserShownOnBar() {
+  getUserShownOnBar(): void {
     const userData = localStorage.getItem('user');
 
     if (userData) {
       const parsedUser = JSON.parse(userData);
-      this.userEmail = parsedUser?.username || 'No Email';
+      this.mainUser = parsedUser?.username || 'No Email';
     } else {
-      this.userEmail = 'No user data';
+      this.mainUser = 'No user data'; 
     }
+  }
+
+
+  testing() {
+    console.log(this.mainUser);
   }
 }

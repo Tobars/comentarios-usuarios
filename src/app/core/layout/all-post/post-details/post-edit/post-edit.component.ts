@@ -8,8 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PostsService } from '../../../../../services/posts.service';
-
+import { PostsService } from '../../../../services/posts.service';
 @Component({
   selector: 'app-post-edit',
   standalone: true,

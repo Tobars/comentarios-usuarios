@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
 
 @Component({
-  selector: 'app-all-posts',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './all-posts.component.html',
-  styleUrls: ['./all-posts.component.css'],
+    selector: 'app-all-posts',
+    standalone: true,
+    templateUrl: './all-posts.component.html',
+    styleUrls: ['./all-posts.component.css'],
+    imports: [CommonModule, RouterModule, NavBarComponent]
 })
 export class AllPostComponent implements OnInit {
   posts: any[] = [];
@@ -40,5 +41,12 @@ export class AllPostComponent implements OnInit {
   }
   deletePost() {
     this.postsService.deletePost();
+  }
+
+  testing(){
+    this.postsService.testing();
+
+
+
   }
 }
